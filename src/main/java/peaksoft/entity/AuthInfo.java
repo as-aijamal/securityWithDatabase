@@ -1,9 +1,7 @@
 package peaksoft.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AuthInfo implements UserDetails {
     @Id
     @SequenceGenerator(
@@ -27,11 +27,13 @@ public class AuthInfo implements UserDetails {
             generator = "authInfo_id_gen",
             strategy = GenerationType.SEQUENCE
     )
+
     private Long id;
     private String email;
     private String password;
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role role;
+
 
 
     @Override

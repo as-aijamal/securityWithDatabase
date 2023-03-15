@@ -10,4 +10,6 @@ public interface AuthInfoRepository extends JpaRepository<AuthInfo, Long> {
 
    Optional<AuthInfo> findByEmail(String email);
 
+   boolean existsByEmail(String email);
+
 }

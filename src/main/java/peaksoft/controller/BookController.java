@@ -4,6 +4,7 @@ import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import peaksoft.dto.SimpleResponse;
 import peaksoft.entity.Book;
 import peaksoft.service.BookService;
 
@@ -44,7 +45,7 @@ public class BookController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','VENDOR')")
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable Long id){
+    public SimpleResponse deleteBook(@PathVariable Long id){
        return bookService.deleteBook(id);
     }
 

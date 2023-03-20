@@ -1,5 +1,6 @@
 package peaksoft.service;
 
+import peaksoft.dto.SimpleResponse;
 import peaksoft.entity.Book;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface BookService {
 
     Book updateBook(Long id, Book book);
 
-    String deleteBook(Long id);
+    SimpleResponse deleteBook(Long id);
 
 
 }

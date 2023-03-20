@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import peaksoft.config.jwt.JwtFilter;
+import peaksoft.exception.NotFoundException;
 import peaksoft.repository.AuthInfoRepository;
 
 @EnableWebSecurity
@@ -33,8 +34,9 @@ public class WebAppSecurity {
     @Bean
     public UserDetailsService userDetailsService(){
         return email-> authInfoRepository.findByEmail(email)
-                .orElseThrow(()->
-                       new UsernameNotFoundException(email+" is not found!"));
+                .orElseThrow(() -> new NotFoundException(
+                        "user with email " + email + " doesn't exists!"
+                ));
     }
 
     @Bean

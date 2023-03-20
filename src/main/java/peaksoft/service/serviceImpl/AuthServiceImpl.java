@@ -10,6 +10,9 @@ import peaksoft.dto.AuthRequest;
 import peaksoft.dto.AuthResponse;
 import peaksoft.dto.RegisterRequest;
 import peaksoft.entity.AuthInfo;
+import peaksoft.exception.AlreadyExistsException;
+import peaksoft.exception.BadCredentialsException;
+import peaksoft.exception.NotFoundException;
 import peaksoft.repository.AuthInfoRepository;
 import peaksoft.service.AuthService;
 
@@ -27,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse register(RegisterRequest registerRequest) {
         if (authInfoRepository.existsByEmail(registerRequest.getEmail())) {
-            throw new RuntimeException(String.format
+            throw new AlreadyExistsException(String.format
                     ("User with email: %s already exists", registerRequest.getEmail()));
         }
         AuthInfo authInfo = AuthInfo.builder()
@@ -55,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
         );
 
         AuthInfo authInfo=authInfoRepository.findByEmail(authRequest.getEmail())
-                .orElseThrow(()->new NoSuchElementException(String.format
+                .orElseThrow(()->new BadCredentialsException(String.format
                         ("User with email: %s doesn't exists", authRequest.getEmail())));
         String token=jwtUtil.generateToken(authInfo);
 
